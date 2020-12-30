@@ -1,10 +1,13 @@
 <template>
   <div>
-    <h1>Todo Application</h1>
-    <hr>
-
     <ul>
-      <TodoItem />
+      <TodoItem
+        v-for="(todo, i) of todos"
+        v-bind:key="todo.id"
+        v-bind:index="i"
+        v-bind:todo="todo"
+        v-on:remove-todo="removeTodo"
+      />
     </ul>
   </div>
 </template>
@@ -14,8 +17,14 @@ import TodoItem from '@/components/TodoItem.vue';
 
 export default {
   name: 'TodoList',
+  props: ['todos'],
   components: {
     TodoItem,
+  },
+  methods: {
+    removeTodo(id) {
+      this.$emit('remove-todo', id);
+    },
   },
 };
 </script>
