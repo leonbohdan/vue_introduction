@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div>{{ projects }}</div>
     <ul>
       <TodoItem
         v-for="(todo, i) of todos"

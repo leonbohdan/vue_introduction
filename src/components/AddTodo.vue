@@ -1,6 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <input class="input" type="text"
+    <input class="input"
+           type="text"
            v-model="title"
     >
     <button class="btn waves-effect" type="submit">Create Todo</button>

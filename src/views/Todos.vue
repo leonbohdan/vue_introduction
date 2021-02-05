@@ -5,6 +5,7 @@
     <AddTodo
         @add-todo="addTodo"
     />
+
     <select v-model="filter">
       <option value="all">All</option>
       <option value="completed">Completed</option>
@@ -26,6 +27,9 @@
 import TodoList from '@/components/TodoList.vue';
 import AddTodo from '@/components/AddTodo.vue';
 import Loader from '@/components/Loader.vue';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
 
 export default {
   name: 'app',
@@ -36,20 +40,38 @@ export default {
   },
   data() {
     return {
+      projects: '',
       todos: [],
       loading: true,
       filter: 'all',
     };
   },
   mounted() {
-    fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
-      .then((response) => response.json())
-      .then((json) => {
-        setTimeout(() => {
-          this.todos = json;
-          this.loading = false;
-        }, 1000);
-      });
+    const db = firebase.database();
+
+    const name = db.ref('name');
+
+    name.on('value', (elem) => {
+      this.projects = elem.val();
+    });
+    console.log(db);
+    // console.log(projects);
+
+    // fetch(db.refFromURL())
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     this.projects = json;
+    //     this.loading = false;
+    //   });
+
+    // fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
+    //   .then((response) => response.json())
+    //   .then((json) => {
+    //     setTimeout(() => {
+    //       this.todos = json;
+    //       this.loading = false;
+    //     }, 1000);
+    //   });
   },
   // watch: {
   //   filter(value) {
